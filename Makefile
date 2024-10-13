@@ -268,6 +268,18 @@ else ifeq ($(platform), miyoo)
    LDFLAGS += -lrt
    FLAGS += -ffast-math -mcpu=arm926ej-s
 
+# XYDDS
+else ifeq ($(platform), xydds)
+   TARGET := $(TARGET_NAME)_libretro.so
+   CC = /opt/xydds/usr/bin/arm-linux-gcc
+   CXX = /opt/xydds/usr/bin/arm-linux-g++
+   AR = /opt/xydds/usr/bin/arm-linux-ar
+   fpic := -fPIC
+   SHARED := -shared -Wl,--no-undefined -Wl,--version-script=link.T
+   LDFLAGS += -lrt
+   FLAGS += -ffast-math -marm -mfpu=neon-vfpv4 -mfloat-abi=hard
+   FLAGS += -DARM -mcpu=cortex-a7
+
 # Windows MSVC 2017 all architectures
 else ifneq (,$(findstring windows_msvc2017,$(platform)))
 
